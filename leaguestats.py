@@ -19,10 +19,8 @@ def search(user, region):
         lp = doc.find(class_="lp").text
         winrate = doc.find(class_="ratio").text
         winloss = doc.find(class_="win-lose").text
-        wins = int((winloss.split()[0]).replace('W',' '))
-        losses = int((winloss.split(" ")[1][:len(winloss)]).replace("L", ""))
 
-        return [rank, int(lp[:len(lp) - 2]), int(winrate[len(winrate) - 4: len(winrate) - 1]), wins, losses]
+        return [rank, lp, winrate, winloss]
     
     except:
         return "this user aint ranked yet."
