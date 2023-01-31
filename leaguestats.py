@@ -27,8 +27,6 @@ def search(user, region):
     except:
         return "this user aint ranked yet."
 
-print(search("Gnartek", "na"))
-
 def stats(user, region):
     try:
         link = f"https://championmastery.gg/summoner?summoner={user}&region={region}"
