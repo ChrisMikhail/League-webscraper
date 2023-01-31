@@ -35,7 +35,7 @@ def stats(user, region):
         fig1, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
         ax1.axis('equal')
-        ax1.set_title("Chamption Mastery for top 5 champs")
+        ax1.set_title("Chamption Mastery for {user}'s top 5 champs")
         plt.show()
     except:
         return "this user aint found."
