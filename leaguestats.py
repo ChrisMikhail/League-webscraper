@@ -1,5 +1,5 @@
 import requests
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
 import html5lib
 import matplotlib.pyplot as plt
 
@@ -9,19 +9,16 @@ def parseSite(link):
     doc = BeautifulSoup(result, "html.parser")
     return doc
 
-
 def search(user, region):
     try:
         link = f"https://www.op.gg/summoners/{region}/{user}"
         doc = parseSite(link)
-        
         rank = (doc.find(class_="tier").text).title()
         lp = doc.find(class_="lp").text
         winrate = doc.find(class_="ratio").text
         winloss = doc.find(class_="win-lose").text
 
         return [rank, lp, winrate, winloss]
-    
     except:
         return "this user aint ranked yet."
 
@@ -35,7 +32,33 @@ def stats(user, region):
         fig1, ax1 = plt.subplots()
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
         ax1.axis('equal')
-        ax1.set_title("Chamption Mastery for {user}'s top 5 champs")
+        ax1.set_title(f"Chamption Mastery for {user}'s top 5 champs")
         plt.show()
     except:
         return "this user aint found."
+
+
+def pastRanks(user, region):
+    region = region.lower()
+    user = user.strip().replace(" ", "+")
+    link = f"https://www.leagueofgraphs.com/summoner/{region}/{user}"
+    doc = parseSite(link)
+    ranks = []
+    rank_tags = doc.find_all(class_="tag requireTooltip brown")
+    for tag in rank_tags:
+        rank = tag.text.strip()
+        ranks.append(rank)
+
+    return ranks
+
+
+def doAll(user, region):
+    print(search(user, region), pastRanks(user, region))
+    stats(user, region)
+
+
+
+doAll("CLXWNED", "na")
+
+
+
